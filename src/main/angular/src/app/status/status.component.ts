@@ -12,7 +12,7 @@ import {TrafficLightComponent} from './traffic-light/traffic-light.component';
 import {ApplianceType} from '../appliance/appliance-type';
 import {ElectricVehicle} from '../control/evcharger/electric-vehicle/electric-vehicle';
 import {EvChargerState} from '../control/evcharger/ev-charger-state';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {FlowExportComponent} from '../nodered/flow-export/flow-export.component';
 import {FlowExportData} from '../nodered/flow-export/flow-export-data';
 import {ActivatedRoute} from '@angular/router';
