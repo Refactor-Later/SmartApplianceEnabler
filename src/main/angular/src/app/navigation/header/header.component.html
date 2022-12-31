@@ -1,9 +1,7 @@
 <mat-toolbar class="HeaderComponent" color="primary">
-  <div>
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
+  <button mat-icon-button class="HeaderComponent__menuicon" (click)="onToggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
   <div class="HeaderComponent__layout">
     <div class="HeaderComponent__title">{{'HeaderComponent.title' | translate}} {{version}}</div>
     <div class="HeaderComponent__linkboxes">
