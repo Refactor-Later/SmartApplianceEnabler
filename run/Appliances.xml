@@ -25,6 +25,31 @@
             </DayTimeframe>
         </Schedule>
     </Appliance>
+    <Appliance id="F-00000001-000000000009-00">
+        <StartingCurrentSwitch>
+            <HttpSwitch>
+                <HttpWrite url="http://tasmota/cm?cmnd=Power%20On">
+                    <HttpWriteValue name="On"/>
+                </HttpWrite>
+                <HttpWrite url="http://tasmota/cm?cmnd=Power%20Off">
+                    <HttpWriteValue name="Off"/>
+                </HttpWrite>
+            </HttpSwitch>
+        </StartingCurrentSwitch>
+        <HttpElectricityMeter pollInterval="20" contentProtocol="JSON">
+            <HttpRead url="http://tasmota/cm?cmnd=Status%208">
+                <HttpReadValue name="Energy" path="$.StatusSNS.ENERGY.Total"/>
+            </HttpRead>
+            <Notifications/>
+        </HttpElectricityMeter>
+        <Schedule enabled="true">
+            <RuntimeRequest min="0" max="300"/>
+            <DayTimeframe>
+                <Start hour="4" minute="0" second="0"/>
+                <End hour="20" minute="0" second="0"/>
+            </DayTimeframe>
+        </Schedule>
+    </Appliance>
     <Connectivity>
         <MqttBroker host="localhost" port="1883"/>
     </Connectivity>

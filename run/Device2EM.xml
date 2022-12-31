@@ -26,4 +26,30 @@
             </Requests>
         </Capabilities>
     </DeviceInfo>
+    <DeviceInfo>
+        <Identification>
+            <DeviceId>F-00000001-000000000009-00</DeviceId>
+            <DeviceName>Tasmota 2</DeviceName>
+            <DeviceType>Other</DeviceType>
+            <DeviceSerial>222222</DeviceSerial>
+            <DeviceVendor>Viessmann</DeviceVendor>
+        </Identification>
+        <Characteristics>
+            <MaxPowerConsumption>4000</MaxPowerConsumption>
+        </Characteristics>
+        <Capabilities>
+            <CurrentPower>
+                <Method>Measurement</Method>
+            </CurrentPower>
+            <Timestamps>
+                <AbsoluteTimestamps>false</AbsoluteTimestamps>
+            </Timestamps>
+            <Interruptions>
+                <InterruptionsAllowed>true</InterruptionsAllowed>
+            </Interruptions>
+            <Requests>
+                <OptionalEnergy>true</OptionalEnergy>
+            </Requests>
+        </Capabilities>
+    </DeviceInfo>
 </Device2EM>
