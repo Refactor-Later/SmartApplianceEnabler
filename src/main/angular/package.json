@@ -7,7 +7,7 @@
   "license": "GPL",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "start-raspi2": "ng serve --configuration=raspi2",
     "build": "ng build",
     "test": "ng version",
