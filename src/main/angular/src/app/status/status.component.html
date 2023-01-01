@@ -7,11 +7,13 @@
       <a class="StatusComponent__nodered-export-button"
          (click)="openDialog()"
          matTooltip="{{'StatusComponent.dashboard.export' | translate}}"
+         [matTooltipDisabled]="'matTooltipDisabled' | env"
       ><mat-icon>redo</mat-icon></a>
       <a class="StatusComponent__nodered-export-button"
          [href]="nodeRedDashboardUrl | safeurl"
          target="_blank"
          matTooltip="{{'StatusComponent.dashboard.open' | translate}}"
+         [matTooltipDisabled]="'matTooltipDisabled' | env"
       ><mat-icon>open_in_new</mat-icon></a>
     </h1>
     <messagebox [level]="MessageBoxLevel.INFO" *ngIf="!hasControllableAppliances"

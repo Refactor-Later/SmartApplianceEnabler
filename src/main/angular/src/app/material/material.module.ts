@@ -18,6 +18,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HelpComponent} from './help/help.component';
 import {FilenameInputComponent} from './filenameinput/filename-input.component';
 import {SafeurlPipe} from '../shared/safe-url.pipe';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {SafeurlPipe} from '../shared/safe-url.pipe';
     MatToolbarModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   exports: [
     HelpComponent,
