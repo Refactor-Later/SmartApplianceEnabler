@@ -148,23 +148,61 @@ Angesichts dieser Probleme stoppe ich hier erstmal den Versuch, die automatische
 1. Version in `README.md` und `README_EN.md` erhöhen 
 1. Tag mit neuer Version erstellen, z.B. `2.0.2`
 1. Änderungen inkl. Tags zu Github pushen
-1. Jenkins-Build manuell starten und Docker-Push aktivieren (dauert inkl. Browserstack-Tests aktuell ca. 50 Minuten)
-   1. compiliert Source-Files und baut Java-Backend und Angular-Webanwendung
-   1. führt Unit-Tests aus
-   1. Browserstack-Tests
-      1. baut Docker-Image des *Smart Appliance Enabler* für Browserstack-Tests
-      1. startet gebauten Docker-Container, wobei HTTP/Modbus-Aufrufe der während der Tests erstellten Schalter/Zähler unterdrückt werden
-      1. führt Browserstack-Tests in verschiedenen Browser aus
-   1. erstellt Docker-Image für amd64 und pusht es zu Dockerhub
-   1. erstellt Docker-Image für arm32 und pusht es zu Dockerhub
-1. Kopieren des Build-Artefakts aus dem Jenkins-Docker-Container auf den Host:
-   ```bash 
-   docker cp jenkins:/var/jenkins_home/workspace/SmartApplianceEnabler2/target/SmartApplianceEnabler-2.0.2.war /tmp
-   ```
-1. Kopieren des Build-Artefakts vom Server auf den lokalen Rechner: 
-   ```bash
-   scp server:/tmp/SmartApplianceEnabler-2.0.2.war /tmp
-   ```
+1. Alternative: Build mit Jenkins
+   1. Jenkins-Build manuell starten und Docker-Push aktivieren (dauert inkl. Browserstack-Tests aktuell ca. 50 Minuten)
+      1. compiliert Source-Files und baut Java-Backend und Angular-Webanwendung
+      1. führt Unit-Tests aus
+      1. Browserstack-Tests
+         1. baut Docker-Image des *Smart Appliance Enabler* für Browserstack-Tests
+         1. startet gebauten Docker-Container, wobei HTTP/Modbus-Aufrufe der während der Tests erstellten Schalter/Zähler unterdrückt werden
+         1. führt Browserstack-Tests in verschiedenen Browser aus
+      1. erstellt Docker-Image für amd64 und pusht es zu Dockerhub
+      1. erstellt Docker-Image für arm32 und pusht es zu Dockerhub
+   1. Kopieren des Build-Artefakts aus dem Jenkins-Docker-Container auf den Host:
+      ```bash 
+      docker cp jenkins:/var/jenkins_home/workspace/SmartApplianceEnabler2/target/SmartApplianceEnabler-2.0.2.war /tmp
+      ```
+   1. Kopieren des Build-Artefakts vom Server auf den lokalen Rechner: 
+      ```bash
+      scp server:/tmp/SmartApplianceEnabler-2.0.2.war /tmp
+      ```
+1. Alternative: lokaler Build
+   1. Bauen des Docker-Images für AMD64 
+      ```bash
+      rm -f docker/sae-amd64/*.war
+      cp target/SmartApplianceEnabler*.war docker/sae-amd64/
+      git restore docker/sae-amd64/Dockerfile
+      export VERSION=`ls docker/sae-amd64/*.war | awk -F '-' '{print $3}' | awk -F '.war' '{print $1}'` 
+      sed -i 's#@project.version@#'\"$VERSION\"'#' docker/sae-amd64/Dockerfile
+      docker build --tag=avanux/smartapplianceenabler:amd64 --no-cache ./docker/sae-amd64
+      docker push avanux/smartapplianceenabler:amd64      
+      ```
+   1. Bauen des Docker-Images für ARM32
+      1. Kopieren des WAR-Files auf den Raspberry Pi
+         ```bash
+         scp target/SmartApplianceEnabler-2.5.0.war sae@raspi2:/opt/sae/SmartApplianceEnabler/docker/sae-arm32/
+         ```
+      1. Bauen des Images auf dem Raspberry Pi
+         ```bash
+         cd /opt/sae/SmartApplianceEnabler
+         rm -f docker/sae-arm32/*.war
+         git pull
+         git restore docker/sae-amd64/Dockerfile
+         VERSION=`ls docker/sae-arm32/*.war | awk -F '-' '{print $3}' | awk -F '.war' '{print $1}'`;sed -i 's#@project.version@#'\"$VERSION\"'#' docker/sae-arm32/Dockerfile
+         docker build --tag=avanux/smartapplianceenabler:arm --no-cache ./docker/sae-arm32
+         docker push avanux/smartapplianceenabler:arm
+         ```
+   1. Erzeugen des Docker-Manifests und der Latest-Tags
+      ```bash
+      docker manifest create avanux/smartapplianceenabler:$VERSION --amend avanux/smartapplianceenabler:amd64 --amend avanux/smartapplianceenabler:arm
+      docker manifest annotate avanux/smartapplianceenabler:$VERSION avanux/smartapplianceenabler:arm --variant v7
+      docker manifest push avanux/smartapplianceenabler:$VERSION
+      
+      docker manifest create avanux/smartapplianceenabler:latest --amend avanux/smartapplianceenabler:amd64 --amend avanux/smartapplianceenabler:arm
+      docker manifest annotate avanux/smartapplianceenabler:latest avanux/smartapplianceenabler:arm --variant v7
+      docker manifest push avanux/smartapplianceenabler:latest
+      ```
+
 1. Erstellen eines neuen Releases auf Github unter Verwendung des bereits angelegten Tags
 1. Bekanntmachen des neuen Releases auf Gihub-Discussions und Sperren des Themas zur Vermeidung von Diskussionen innerhalb der Bekanntmachung
 
