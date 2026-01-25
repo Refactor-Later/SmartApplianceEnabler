@@ -12,6 +12,20 @@ und das Projekt folgt den Leitlinien des [Semantic Versioning](https://semver.or
 | SAE         | Smart Appliance Enabler |
 | SHM         | Sunny Home Manager |
 
+## [2.5.0](https://github.com/camueller/SmartApplianceEnabler/releases/tag/2.5.0) - 25.01.2026
+
+### Gefixt
+- wenn Anlaufstrom zu einem Zeitpunkt erkannt wurde, bei dem die Restzeit des aktuellen Zeitplan-Interval nicht ausreichend war, wurde der nächste Zeitplan-Interval möglicherwiese nicht aktiviert
+- Resourcen (Requests) wurden nicht komplett freigegeben, was langfristig zu Speicher-Problem der Java VM führen konnte
+- diverse kleinere Fixes für Wallboxen (Queue-Handling, "Fertig"-Erkennung, ...) 
+
+### Geändert
+- die Queue mit Zeitplan-Intervallen wird nicht mehr periodisch gefüllt, sondern beim Start des SAE und beim Ablauf von Zeitplan-Intervallen
+- Ampel blinkt Rot, wenn der nächste Zeitplan-Interval nur Überschuß-Energie verwendet
+
+### Neu
+- das Root-Topic (Default: "sae") für MQTT ist jetzt konfigurierbar [#660](https://github.com/camueller/SmartApplianceEnabler/issues/660)
+
 ## [2.4.0](https://github.com/camueller/SmartApplianceEnabler/releases/tag/2.4.0) - 04.01.2025
 
 ### Gefixt
