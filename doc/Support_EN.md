@@ -22,7 +22,7 @@ In this way, the user gets a working *Smart Appliance Enabler* installation as q
 ## Pricing
 The paid support will be charged with
 
-**65 Euro/hour incl. VAT**
+**65 Euro/hour**
 
 which is roughly the amount that every plumbing/heating engineer bills. Since I know exactly what to do when it comes to installing and configuring the *Smart Appliance Enabler*, in most cases everything is already done in one or two hours.
 

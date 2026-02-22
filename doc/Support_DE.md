@@ -22,7 +22,7 @@ Auf diese Weise kommt der User schnellstmöglich zu einer funktionierenden *Smar
 ## Kosten
 Der kostenpflichtige Support wird von mir mit
 
-**65 Euro/Stunde inkl. MwSt.**
+**65 Euro/Stunde**
 
 in Rechnung gestellt, also in etwa der Betrag, den auch jeder Sanitär-/Heizungstechniker in Rechnung stellt. Da ich bei Installation und Konfiguration rund um den *Smart Appliance Enabler* genau weiss, was zu tun ist, ist mit ein oder zwei Stunden in den meisten Fällen schon alles erreicht.
 
